@@ -1,15 +1,24 @@
 package com.springframework.petclinic.model;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
+@Table(name = "owners")
 public class Owner extends Person {
 
+    @Column(name = "city")
     private String city;
-    private String address;
-    private String telephone;
-    private Set<Pet> pets = new HashSet<>();
 
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "telephone")
+    private String telephone;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private Set<Pet> pets = new HashSet<>();
 
     public Set<Pet> getPets() {
         return pets;
