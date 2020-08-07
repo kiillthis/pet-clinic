@@ -27,7 +27,7 @@ public class VisitSDJpaService implements VisitService {
     }
 
     @Override
-    public Visit findBYId(Long aLong) {
+    public Visit findById(Long aLong) {
         return visitRepository.findById(aLong).orElse(null);
     }
 

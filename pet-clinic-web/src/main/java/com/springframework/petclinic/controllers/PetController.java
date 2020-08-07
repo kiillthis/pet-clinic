@@ -26,7 +26,6 @@ public class PetController {
     private final OwnerService ownerService;
     private final PetTypeService petTypeService;
 
-
     public PetController(PetService pets, OwnerService owners, PetTypeService petTypeService) {
         this.petService = pets;
         this.ownerService = owners;
@@ -40,10 +39,10 @@ public class PetController {
 
     @ModelAttribute("owner")
     public Owner findOwner(@PathVariable("ownerId") Long ownerId) {
-        return ownerService.findBYId(ownerId);
+        return ownerService.findById(ownerId);
     }
 
-    @ModelAttribute("owner")
+    @InitBinder("owner")
     public void initOwnerBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
     }
@@ -65,7 +64,7 @@ public class PetController {
         }
 
         owner.getPets().add(pet);
-        pet.setOwner(owner);
+
         if(result.hasErrors()) {
             model.addAttribute("pet", pet);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
@@ -78,7 +77,7 @@ public class PetController {
 
     @GetMapping("/pets/{petId}/edit")
     public String initUpdateForm(@PathVariable Long petId, Model model) {
-        model.addAttribute("pet", petService.findBYId(petId));
+        model.addAttribute("pet", petService.findById(petId));
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
     }
 
